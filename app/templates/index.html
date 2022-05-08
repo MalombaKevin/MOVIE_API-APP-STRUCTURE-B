@@ -1,0 +1,26 @@
+{% extends 'base.html'%}
+{% import 'macros.html' as macro%}
+{% block content%}
+<div class="container">
+    <form align="center" style="font-size:large">
+        <input type="text" name="movie_query" placeholder="Search for a Movie" class="form-control" style='border:1px gold solid; border-radius: 5rem; background-color: none; text-align: center;'> <br>
+        <input type="submit"  value="Submit" class="btn btn-default" style='border:1px blue solid; border-radius: 5rem; background-color: blue;color:white'>
+    </form>
+
+</div>
+     <!-- Popular movie -->
+     <h3> Popular Movies</h3>
+     <ul>
+         {{ macro.displayMovieList(popular)}}
+     </ul>
+     <!-- Upcoming movie  -->
+     <h3> Upcoming Movies </h3>
+     <ul>
+         {{ macro.displayMovieList(upcoming)}}
+     </ul>
+     <!-- Now showing movie -->
+     <h3>Now Showing</h3>
+     <ul>
+         {{ macro.displayMovieList(showing)}}
+     </ul>
+{% endblock %}
