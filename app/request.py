@@ -1,16 +1,17 @@
-from app import app
-import urllib.request
-import json
-from .models import movie
+import urllib.request, json
+from . import models
+from .models import Movie
+from .models import Review
 
 
+def configure_request(app):
+    global api_key, base_url
+    api_key = app.config['MOVIE_API_KEY']
+    base_url = app.config['MOVIE_API_BASE_URL']
 
-api_key = app.config['MOVIE_API_KEY']
-base_url = app.config['MOVIE_API_BASE_URL']
 
-
-def get_movies(malomba_s):
-    get_movies_url = base_url.format(malomba_s, api_key)
+def get_movies(malomba):
+    get_movies_url = base_url.format(malomba, api_key)
 
     with urllib.request.urlopen(get_movies_url) as url:
         get_movies_data = url.read()
@@ -36,7 +37,7 @@ def process_results(movie_list):
         vote_count = movie_item.get('vote_count')
 
         if poster:
-            movie_object = movie.Movie(id,title,overview,poster,vote_average,vote_count)
+            movie_object = models.Movie(id,title,overview,poster,vote_average,vote_count)
             movie_results.append(movie_object)
 
     return movie_results
@@ -57,7 +58,7 @@ def get_movie(id):
             vote_average = movie_details_response.get('vote_average')
             vote_count = movie_details_response.get('vote_count')
 
-            movie_object = movie.Movie(id,title,overview,poster,vote_average,vote_count)
+            movie_object = models.Movie(id,title,overview,poster,vote_average,vote_count)
 
     return movie_object
 
